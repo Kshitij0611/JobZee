@@ -6,12 +6,11 @@ import { useNavigate } from "react-router-dom";
 import ResumeModal from "./ResumeModal";
 
 const MyApplications = () => {
-  const { user } = useContext(Context);
+  const { user, isAuthorized } = useContext(Context);
   const [applications, setApplications] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [resumeImageUrl, setResumeImageUrl] = useState("");
 
-  const { isAuthorized } = useContext(Context);
   const navigateTo = useNavigate();
 
   useEffect(() => {
@@ -50,8 +49,8 @@ const MyApplications = () => {
         })
         .then((res) => {
           toast.success(res.data.message);
-          setApplications((prevApplication) =>
-            prevApplication.filter((application) => application._id !== id)
+          setApplications((prevApplications) =>
+            prevApplications.filter((application) => application._id !== id)
           );
         });
     } catch (error) {
@@ -68,61 +67,8 @@ const MyApplications = () => {
     setModalOpen(false);
   };
 
-  return (
-    <section className="my_applications page">
-      {user && user.role === "Job Seeker" ? (
-        <div className="container">
-          <h1>My Applications</h1>
-          {applications.length <= 0 ? (
-            <>
-              {" "}
-              <h4>No Applications Found</h4>{" "}
-            </>
-          ) : (
-            applications.map((element) => {
-              return (
-                <JobSeekerCard
-                  element={element}
-                  key={element._id}
-                  deleteApplication={deleteApplication}
-                  openModal={openModal}
-                />
-              );
-            })
-          )}
-        </div>
-      ) : (
-        <div className="container">
-          <h1>Applications From Job Seekers</h1>
-          {applications.length <= 0 ? (
-            <>
-              <h4>No Applications Found</h4>
-            </>
-          ) : (
-            applications.map((element) => {
-              return (
-                <EmployerCard
-                  element={element}
-                  key={element._id}
-                  openModal={openModal}
-                />
-              );
-            })
-          )}
-        </div>
-      )}
-      {modalOpen && (
-        <ResumeModal imageUrl={resumeImageUrl} onClose={closeModal} />
-      )}
-    </section>
-  );
-};
-
-export default MyApplications;
-
-const JobSeekerCard = ({ element, deleteApplication, openModal }) => {
-  return (
-    <>
+  const JobSeekerCard = ({ element, deleteApplication, openModal }) => {
+    return (
       <div className="job_seeker_card">
         <div className="detail">
           <p>
@@ -154,13 +100,11 @@ const JobSeekerCard = ({ element, deleteApplication, openModal }) => {
           </button>
         </div>
       </div>
-    </>
-  );
-};
+    );
+  };
 
-const EmployerCard = ({ element, openModal }) => {
-  return (
-    <>
+  const EmployerCard = ({ element, openModal }) => {
+    return (
       <div className="job_seeker_card">
         <div className="detail">
           <p>
@@ -187,6 +131,48 @@ const EmployerCard = ({ element, openModal }) => {
           />
         </div>
       </div>
-    </>
+    );
+  };
+
+  return (
+    <section className="my_applications page">
+      {user && user.role === "Job Seeker" ? (
+        <div className="container">
+          <h1>My Applications</h1>
+          {applications.length <= 0 ? (
+            <h4>No Applications Found</h4>
+          ) : (
+            applications.map((element) => (
+              <JobSeekerCard
+                element={element}
+                key={element._id}
+                deleteApplication={deleteApplication}
+                openModal={openModal}
+              />
+            ))
+          )}
+        </div>
+      ) : (
+        <div className="container">
+          <h1>Applications From Job Seekers</h1>
+          {applications.length <= 0 ? (
+            <h4>No Applications Found</h4>
+          ) : (
+            applications.map((element) => (
+              <EmployerCard
+                element={element}
+                key={element._id}
+                openModal={openModal}
+              />
+            ))
+          )}
+        </div>
+      )}
+      {modalOpen && (
+        <ResumeModal imageUrl={resumeImageUrl} onClose={closeModal} />
+      )}
+    </section>
   );
 };
+
+export default MyApplications;

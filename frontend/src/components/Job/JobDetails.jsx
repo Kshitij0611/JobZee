@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../main";
+
 const JobDetails = () => {
   const { id } = useParams();
   const [job, setJob] = useState({});
@@ -22,6 +23,12 @@ const JobDetails = () => {
         navigateTo("/notfound");
       });
   }, []);
+
+  /*
+      axios.get request ek promise return karta hai. Jab request successful hoti hai, to .then block execute hota hai.
+      res parameter me server se response milta hai. res.data me actual data hota hai jo server se fetch kiya gaya hai.
+      setJobs(res.data) call hota hai, jo jobs state ko update karta hai fetched data ke saath.
+  */
 
   if (!isAuthorized) {
     navigateTo("/login");

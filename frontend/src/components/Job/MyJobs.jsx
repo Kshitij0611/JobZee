@@ -28,9 +28,32 @@ const MyJobs = () => {
     };
     fetchJobs();
   }, []);
+
   if (!isAuthorized || (user && user.role !== "Employer")) {
     navigateTo("/");
   }
+
+  /*
+      1) The above function is same as :->
+
+        const fetchJobs = async () => {
+          try {
+            const { data } = await axios.get(
+              "http://localhost:4000/api/v1/job/getmyjobs",
+              { withCredentials: true }
+            );
+            setMyJobs(data.myJobs);
+          } catch (error) {
+            toast.error(error.response.data.message);
+            setMyJobs([]);
+          }
+        };
+
+        useEffect(() => {
+          fetchJobs();
+        }, []);
+
+  */
 
   //Function For Enabling Editing Mode
   const handleEnableEdit = (jobId) => {
@@ -82,6 +105,14 @@ const MyJobs = () => {
       )
     );
   };
+
+  /*
+      { ...job, [field]: value }: Yeh syntax job object ko spread karta hai (yaani, job object ke sabhi existing properties ko copy karta hai) 
+       aur specific field ko nayi value ke saath update karta hai. Yaha [field] ek dynamic key hai, jiska naam runtime par set hota hai based 
+       on the field parameter.
+
+        If No Match: Agar job._id aur jobId match nahi karte, to original job object waise ka waise hi return hota hai, bina kisi change ke.
+  */
 
   return (
     <>

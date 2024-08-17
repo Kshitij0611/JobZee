@@ -7,25 +7,26 @@ const PopularCompanies = () => {
     {
       id: 1,
       title: "Microsoft",
-      location: "Street 10 Karachi, Pakistan",
+      location: "Redmond, Washington, United States",
       openPositions: 10,
       icon: <FaMicrosoft />,
     },
     {
       id: 2,
       title: "Tesla",
-      location: "Street 10 Karachi, Pakistan",
+      location: "Austin, Texas, United States",
       openPositions: 5,
       icon: <SiTesla />,
     },
     {
       id: 3,
       title: "Apple",
-      location: "Street 10 Karachi, Pakistan",
+      location: "Cupertino, California, United States",
       openPositions: 20,
       icon: <FaApple />,
     },
   ];
+  
   return (
     <div className="companies">
       <div className="container">

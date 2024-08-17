@@ -16,37 +16,38 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+  const { isAuthorized, setIsAuthorized, user, setUser} = useContext(Context);
 
   const handleRegister = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Iska use kiya jaata hai taaki form ke default submit action ko prevent kiya ja sake aur page reload na ho.
     try {
       const { data } = await axios.post(
         "http://localhost:4000/api/v1/user/register",
-        { name, phone, email, role, password },
+        { name, phone, email, role, password },  // Request body me user details (name, phone, email, role, password) bheji jaati hai.
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", // headers me "Content-Type": "application/json" set kiya gaya hai, jo batata hai ki request body JSON format me hai.
           },
-          withCredentials: true,
+          withCredentials: true, // withCredentials: true ka matlab hai ki request ke saath cookies bhi send ki jaayengi.
         }
       );
-      toast.success(data.message);
-      setName("");
-      setEmail("");
-      setPassword("");
+      toast.success(data.message); // Agar request successful hoti hai, to data.message ko success toast ke roop me display kiya jaata hai.
+      setName(""); 
+      setEmail("");               // Form fields (name, email, password, phone, role) ko clear kiya jaata 
+      setPassword("");            // hai (set to empty strings)
       setPhone("");
       setRole("");
-      setIsAuthorized(true);
+      setIsAuthorized(true); 
     } catch (error) {
       toast.error(error.response.data.message);
-    }
+      console.log(error);                         // Agar request me error aata hai, to error message ko error toast ke 
+      }                                          // roop me display kiya jaata hai. error.response.data.message se error message fetch kiya jaata hai.                                         
   };
 
+  // Agar isAuthorized true hai, to Navigate component ka use karke user ko home page ('/') par redirect kiya jaata hai.
   if(isAuthorized){
     return <Navigate to={'/'}/>
   }
-
 
   return (
     <>
@@ -73,7 +74,7 @@ const Register = () => {
               <div>
                 <input
                   type="text"
-                  placeholder="Zeeshan"
+                  placeholder="Kshitij"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -85,7 +86,7 @@ const Register = () => {
               <div>
                 <input
                   type="email"
-                  placeholder="zk@gmail.com"
+                  placeholder="ksh@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -123,7 +124,7 @@ const Register = () => {
           </form>
         </div>
         <div className="banner">
-          <img src="/register.png" alt="login" />
+          <img src="/register.png" alt="register" />
         </div>
       </section>
     </>

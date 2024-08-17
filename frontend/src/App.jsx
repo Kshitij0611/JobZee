@@ -18,9 +18,20 @@ import NotFound from "./components/NotFound/NotFound";
 import MyJobs from "./components/Job/MyJobs";
 
 const App = () => {
+  /*
+    Yahaan par useContext hook ka use karke, hum Context se isAuthorized, setIsAuthorized, 
+    aur setUser ko access kar rahe hain. Context global state ko share karne ke liye use hota hai.
+  */
   const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
-  useEffect(() => {
-    const fetchUser = async () => {
+  
+  useEffect(() => { // useEffect ek React hook hai jo side effects handle karne ke liye use hota hai, jaise ki data fetching, subscriptions, ya manually DOM updates
+    const fetchUser = async () => {  // fetchUser ek asynchronous function hai jo user data ko backend se fetch karne ke liye use hota hai.
+      /*
+          axios.get request backend endpoint http://localhost:4000/api/v1/user/getuser par bheja jaata hai.
+          withCredentials: true ka matlab hai ki cookies bhi request ke saath send ki jaayengi.
+          Agar request successful hoti hai, to response.data.user ko setUser se set kar dete hain.
+          setIsAuthorized(true) ko call karke user ko authorized mark karte hain.
+      */
       try {
         const response = await axios.get(
           "http://localhost:4000/api/v1/user/getuser",
@@ -34,8 +45,18 @@ const App = () => {
         setIsAuthorized(false);
       }
     };
-    fetchUser();
-  }, [isAuthorized]);
+    fetchUser(); // fetchUser function ko useEffect ke andar call kiya jaata hai taaki component mount hone par yeh execute ho.
+
+  }, [isAuthorized]);  // useEffect ka dependency array [isAuthorized] hai, jo ensure karta hai ki fetchUser tab execute ho jab isAuthorized state change hoti hai.
+
+  /*
+    Initial render mein isAuthorized false hai, to useEffect run hoga.
+    Jab isAuthorized ki value change hoti hai (false to true ya true to false), to useEffect fir se run hoga.
+
+    Agar isAuthorized false se true ho jaata hai (successful fetch ke baad), to useEffect fir se execute ho sakta hai, 
+    lekin is particular code mein uska immediate effect nahi hoga kyunki fetchUser ko dobara call karna zaroori nahi hoga.
+
+  */
 
   return (
     <>

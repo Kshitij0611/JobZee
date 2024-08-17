@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../main";
+
 const Application = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,35 +17,40 @@ const Application = () => {
   const navigateTo = useNavigate();
 
   // Function to handle file input changes
-  const handleFileChange = (event) => {
-    const resume = event.target.files[0];
+  const handleFileChange = (e) => {
+    const resume = e.target.files[0];
     setResume(resume);
   };
 
+  /* e.target.files se FileList object milta hai jo selected files ko contain karta hai.
+     e.target.files[0] se pehli selected file ko access kar rahe hain.
+  */
+
   const { id } = useParams();
   const handleApplication = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
+    e.preventDefault();  // e.preventDefault() method use kiya gaya hai taaki form submit hone par page reload na ho.
+    const formData = new FormData();          // Yahan par ek FormData object banaya gaya hai. FormData browser ka built-in object hai 
+    formData.append("name", name);            // jo key-value pairs ke form mein data ko hold karta hai.                            
+    formData.append("email", email);          // Yeh zyadatar tab use hota hai jab humein form data ko file ke saath send karna ho (like uploading a file).
+    formData.append("phone", phone);      
     formData.append("address", address);
     formData.append("coverLetter", coverLetter);
     formData.append("resume", resume);
-    formData.append("jobId", id);
+    formData.append("jobId", id);                                         
+    
 
     try {
       const { data } = await axios.post(
         "http://localhost:4000/api/v1/application/post",
-        formData,
+        formData,   // formData object request ki body ke form mein bheja ja raha hai.
         {
           withCredentials: true,
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",  // header set kiya gaya hai taaki server ko pata chale ki form data ke saath file bhi send ho rahi hai.
           },
         }
-      );
-      setName("");
+      ); 
+      setName("");               // Agar request successful hoti hai, toh form ke saare state variables ko reset kar diya jata hai. Iska matlab hai ki form fields khali ho jati hain.
       setEmail("");
       setCoverLetter("");
       setPhone("");
