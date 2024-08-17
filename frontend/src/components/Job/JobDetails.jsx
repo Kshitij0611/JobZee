@@ -22,7 +22,7 @@ const JobDetails = () => {
       .catch((error) => {
         navigateTo("/notfound");
       });
-  }, []);
+  }, [id]);
 
   /*
       axios.get request ek promise return karta hai. Jab request successful hoti hai, to .then block execute hota hai.
