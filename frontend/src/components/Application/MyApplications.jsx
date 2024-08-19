@@ -29,9 +29,9 @@ const MyApplications = () => {
             withCredentials: true,
           })
           .then((res) => {
-            setApplications(res.data.applications);
-          });
-      }
+            setApplications(res.data.applications);  // Jab server se response milta hai (res), to setApplications function
+          });                                        // ko call karke applications state ko update kiya jaata hai. 
+      }                                              // Ye state application data ko store karti hai jo UI me render hota hai.
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -50,7 +50,7 @@ const MyApplications = () => {
         .then((res) => {
           toast.success(res.data.message);
           setApplications((prevApplications) =>
-            prevApplications.filter((application) => application._id !== id)
+            prevApplications.filter((application) => application._id !== id)  // Ye same DeleteJob jaisa hai
           );
         });
     } catch (error) {
@@ -58,9 +58,9 @@ const MyApplications = () => {
     }
   };
 
-  const openModal = (imageUrl) => {
-    setResumeImageUrl(imageUrl);
-    setModalOpen(true);
+  const openModal = (imageUrl) => {    // openModal(imageUrl) call kiya jaata hai with a specific imageUrl.
+    setResumeImageUrl(imageUrl);       // resumeImageUrl state update hota hai imageUrl ke value se.
+    setModalOpen(true);                // modalOpen state ko true set karti hai. Iska matlab hai ki modal open ho jayega aur user ko image dikhayi jaayegi.
   };
 
   const closeModal = () => {
@@ -138,7 +138,7 @@ const MyApplications = () => {
     <section className="my_applications page">
       {user && user.role === "Job Seeker" ? (
         <div className="container">
-          <h1>My Applications</h1>
+          <h2>My Applications</h2>
           {applications.length <= 0 ? (
             <h4>No Applications Found</h4>
           ) : (
@@ -154,7 +154,7 @@ const MyApplications = () => {
         </div>
       ) : (
         <div className="container">
-          <h1>Applications From Job Seekers</h1>
+          <h2>Applications From Job Seekers</h2>
           {applications.length <= 0 ? (
             <h4>No Applications Found</h4>
           ) : (

@@ -50,8 +50,8 @@ const Application = () => {
           },
         }
       ); 
-      setName("");               // Agar request successful hoti hai, toh form ke saare state variables ko reset kar diya jata hai. Iska matlab hai ki form fields khali ho jati hain.
-      setEmail("");
+      setName("");               // Agar request successful hoti hai, toh form ke saare state variables ko reset kar diya jata hai. 
+      setEmail("");              // Iska matlab hai ki form fields khali ho jati hain.
       setCoverLetter("");
       setPhone("");
       setAddress("");

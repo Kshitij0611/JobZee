@@ -31,7 +31,8 @@ const Register = () => {
           withCredentials: true, // withCredentials: true ka matlab hai ki request ke saath cookies bhi send ki jaayengi.
         }
       );
-      toast.success(data.message); // Agar request successful hoti hai, to data.message ko success toast ke roop me display kiya jaata hai.
+      toast.success(data.message);  // Agar request successful hoti hai, to data.message ko success toast ke roop me display kiya jaata hai.
+      setUser(data.user);                           
       setName(""); 
       setEmail("");               // Form fields (name, email, password, phone, role) ko clear kiya jaata 
       setPassword("");            // hai (set to empty strings)

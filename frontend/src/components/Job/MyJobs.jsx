@@ -12,7 +12,7 @@ const MyJobs = () => {
   const { isAuthorized, user } = useContext(Context);
 
   const navigateTo = useNavigate();
-  //Fetching all jobs
+  // Fetching all jobs of an Employer
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -28,6 +28,23 @@ const MyJobs = () => {
     };
     fetchJobs();
   }, []);
+
+  /*
+    Here's the async/await code inside a useEffect hook converted to a promise-based .then() and .catch() format:
+
+   useEffect(() => {
+    axios
+    .get("http://localhost:4000/api/v1/job/getmyjobs", { withCredentials: true })
+    .then((response) => {
+      setMyJobs(response.data.myJobs);
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message);
+      setMyJobs([]);
+    });
+   }, []);
+
+  */
 
   if (!isAuthorized || (user && user.role !== "Employer")) {
     navigateTo("/");
@@ -67,6 +84,10 @@ const MyJobs = () => {
   };
 
   //Function For Updating The Job
+  /*
+     jobId ko function call karte waqt pass kiya jaata hai, jabki job._id ko already myJobs array ke job objects 
+     mein store kiya jaata hai.
+  */
   const handleUpdateJob = async (jobId) => {
     const updatedJob = myJobs.find((job) => job._id === jobId);
     await axios
@@ -81,6 +102,13 @@ const MyJobs = () => {
         toast.error(error.response.data.message);
       });
   };
+
+  /*
+    Axios ka use karte hue ek HTTP PUT request bheji jaati hai server par, taaki job ko update kiya ja sake.
+    API endpoint ka URL jobId ko use karke dynamic tarike se banaya jaata hai.
+    updatedJob object ko request body ke roop mein bheja jaata hai, jo updated job data rakhta hai.
+
+  */
 
   //Function For Deleting Job
   const handleDeleteJob = async (jobId) => {
@@ -97,6 +125,12 @@ const MyJobs = () => {
       });
   };
 
+  /*
+    setMyJobs function use kiya jaata hai current jobs list ko update karne ke liye, jismein delete ki gayi 
+    job ko filter kar ke remove kar diya jaata hai.
+
+  */
+
   const handleInputChange = (jobId, field, value) => {
     // Update the job object in the jobs state with the new value
     setMyJobs((prevJobs) =>
@@ -111,14 +145,14 @@ const MyJobs = () => {
        aur specific field ko nayi value ke saath update karta hai. Yaha [field] ek dynamic key hai, jiska naam runtime par set hota hai based 
        on the field parameter.
 
-        If No Match: Agar job._id aur jobId match nahi karte, to original job object waise ka waise hi return hota hai, bina kisi change ke.
+      If No Match: Agar job._id aur jobId match nahi karte, to original job object waise ka waise hi return hota hai, bina kisi change ke.
   */
 
   return (
     <>
       <div className="myJobs page">
         <div className="container">
-          <h1>Your Posted Jobs</h1>
+          <h2>Your Posted Jobs</h2>
           {myJobs.length > 0 ? (
             <>
               <div className="banner">
