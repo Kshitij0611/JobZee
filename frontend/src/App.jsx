@@ -39,9 +39,9 @@ const App = () => {
             withCredentials: true,
           }
         );
-        setUser(response.data.user);
-        setIsAuthorized(true);
-      } catch (error) {
+        setUser(response.data.user);  // response.data: This is the actual data payload that the server sent back, 
+        setIsAuthorized(true);        // which usually contains the main content of the response. In this case, response.data 
+      } catch (error) {               // is an object that includes your user object and any other relevant data.
         setIsAuthorized(false);
       }
     };
@@ -55,7 +55,6 @@ const App = () => {
 
     Agar isAuthorized false se true ho jaata hai (successful fetch ke baad), to useEffect fir se execute ho sakta hai, 
     lekin is particular code mein uska immediate effect nahi hoga kyunki fetchUser ko dobara call karna zaroori nahi hoga.
-
   */
 
   return (
