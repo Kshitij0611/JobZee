@@ -88,14 +88,18 @@ const Navbar = () => {
       </div>
     </nav>
 
-        /* 
-           *nav tag isAuthorized ke basis par navbarShow ya navbarHide class ko apply karta hai.
-           *div.container ke andar logo aur navigation menu (ul.menu) hai.
-           *ul.menu me Link components hain jo different routes par navigate karte hain aur setShow(false) ko call karte hain jab link click hota hai.
-           *Agar user.role "Employer" hai, to additional menu items "POST NEW JOB" aur "VIEW YOUR JOBS" dikhte hain.
-           *Logout button handleLogout function ko call karta hai.
-           *div.hamburger me GiHamburgerMenu icon hai jo show state ko toggle karta hai.
-        */
+    /*
+        Initial State (show = false): Menu hidden hota hai, sirf hamburger icon dikhai deta hai.
+        After Click (show = true): Menu dikhai dene lagta hai, aur hamburger icon menu ko close karne ke liye ready rehta hai.
+        Hamburger menu ka purpose yahi hota hai ki chhoti screens par menu ko space bachane ke liye initially hide rakha jaye, aur user ke interaction par usko dikhaya jaye.
+    
+        Jab user kisi Link par click karta hai, to onClick={() => setShow(false)} trigger hota hai.
+        setShow(false) function execute hota hai aur show state false set kar diya jata hai.
+
+        Initial State (show = true): Jab show true hota hai, to ul tag ke className me "show-menu menu" classes hoti hain. "show-menu" class menu ko visible banati hai.
+        State Change (show = false): Jab show false ho jata hai, to "show-menu" class remove ho jati hai aur sirf "menu" class reh jati hai.
+        "show-menu" class CSS ke through menu ko visible rakhti hai. Jab ye class remove hoti hai, to menu phir se hidden ya collapse ho jata hai.
+    */
   );
 };
 
