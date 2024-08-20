@@ -107,7 +107,6 @@ const MyJobs = () => {
     Axios ka use karte hue ek HTTP PUT request bheji jaati hai server par, taaki job ko update kiya ja sake.
     API endpoint ka URL jobId ko use karke dynamic tarike se banaya jaata hai.
     updatedJob object ko request body ke roop mein bheja jaata hai, jo updated job data rakhta hai.
-
   */
 
   //Function For Deleting Job
@@ -128,7 +127,6 @@ const MyJobs = () => {
   /*
     setMyJobs function use kiya jaata hai current jobs list ko update karne ke liye, jismein delete ki gayi 
     job ko filter kar ke remove kar diya jaata hai.
-
   */
 
   const handleInputChange = (jobId, field, value) => {
@@ -147,6 +145,9 @@ const MyJobs = () => {
 
       If No Match: Agar job._id aur jobId match nahi karte, to original job object waise ka waise hi return hota hai, bina kisi change ke.
   */
+
+  // disabled property ka use har input field me isliye kiya gaya hai taaki inputs by default non-editable rahein.
+  // Jab user "Edit" button par click karta hai, tab us particular job ke input fields editable hote hain.
 
   return (
     <>
