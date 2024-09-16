@@ -47,9 +47,7 @@ export const postJob = catchAsyncErrors(async (req,res,next) => {
   if ((!salaryFrom || !salaryTo) && !fixedSalary) {
     return next(
       new ErrorHandler(
-        "Please either provide fixed salary or ranged salary.",
-        400
-      )
+        "Please either provide fixed salary or ranged salary.", 400)
     );
   }
 
@@ -158,7 +156,9 @@ export const deleteJob = catchAsyncErrors(async (req, res, next) => {
   if (!job) {
     return next(new ErrorHandler("OOPS! Job not found.", 404));
   }
+  
   await job.deleteOne();
+
   res.status(200).json({
     success: true,
     message: "Job Deleted!",

@@ -5,12 +5,14 @@ const ResumeModal = ({ imageUrl, onClose }) => {
     <div className="resume-modal">
       <div className="modal-content">
         <span className="close" onClick={onClose}>
-          &times;
+          &times; 
         </span>
         <img src={imageUrl} alt="resume" />
       </div>
     </div>
   );
 };
+
+// &times -> x symbol
 
 export default ResumeModal;

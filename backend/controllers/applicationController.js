@@ -128,8 +128,7 @@ export const postApplication = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-export const employerGetAllApplications = catchAsyncErrors(
-  async (req, res, next) => {
+export const employerGetAllApplications = catchAsyncErrors(async (req, res, next) => {
     const { role } = req.user;
     if (role === "Job Seeker") {
       return next(
