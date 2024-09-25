@@ -16,7 +16,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const { isAuthorized, setIsAuthorized, user, setUser} = useContext(Context);
+  const { isAuthorized, setIsAuthorized, setUser} = useContext(Context);
 
   const handleRegister = async (e) => {
     e.preventDefault(); // Iska use kiya jaata hai taaki form ke default submit action ko prevent kiya ja sake aur page reload na ho.

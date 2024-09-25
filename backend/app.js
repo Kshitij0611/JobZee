@@ -12,7 +12,6 @@ import fileUpload from "express-fileupload";
 const app = express();
 config({ path: "./config/config.env" });
 
-
 // Middlewares
 app.use(
   cors({

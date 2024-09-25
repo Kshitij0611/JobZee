@@ -61,6 +61,7 @@ const PopularCategories = () => {
       icon: <IoGameController />,
     },
   ];
+  
   return (
     <div className="categories">
       <h3>POPULAR CATEGORIES</h3>
